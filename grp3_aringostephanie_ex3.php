@@ -28,13 +28,11 @@ function displayContacts($filename) {
     }
 }
 
-// Function to add a new contact
 function addContact($filename, $username, $contactNumber) {
     global $successMessage;
-    // Read existing contacts into an array
+
     $existingContacts = file_exists($filename) ? file($filename, FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES) : [];
 
-    // Check if contact already exists
     foreach ($existingContacts as $contact) {
         $contactDetails = explode('|', $contact);
         if ($contactDetails[0] == $username && $contactDetails[1] == $contactNumber) {
@@ -43,12 +41,10 @@ function addContact($filename, $username, $contactNumber) {
         }
     }
 
-    // Append new contact (username|contactNumber) to the file
     file_put_contents($filename, $username . '|' . $contactNumber . PHP_EOL, FILE_APPEND);
     $successMessage = "<p style='color: green;'>Contact added successfully.</p>";
 }
 
-// Function to delete a contact
 function deleteContact($filename, $contact) {
     global $successMessage;
     if (file_exists($filename)) {
@@ -69,7 +65,6 @@ function deleteContact($filename, $contact) {
     }
 }
 
-// Handling form submissions
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     if (isset($_POST['username']) && isset($_POST['contact'])) {
         $username = trim($_POST['username']);
@@ -87,7 +82,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     }
 }
 
-// Display form and contacts
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -115,7 +109,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         displayContacts($filename);
         ?>
 
-        <!-- Success or error message displayed after the contact list -->
         <div style="margin-top: 20px;">
             <?php echo $successMessage; ?>
         </div>
